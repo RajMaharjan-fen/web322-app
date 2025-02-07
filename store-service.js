@@ -26,13 +26,17 @@ module.exports.getAllItems = () => {
 
 module.exports.getPublishedItems = () => {
     return new Promise((resolve, reject) => {
-        let publishedItems = items.filter(item => item.published === true);
-        publishedItems.length > 0 ? resolve(publishedItems) : reject("No published items found");
+        let publishedItems = items.filter((item) => item.published === true);
+        publishedItems.length > 0
+            ? resolve(publishedItems)
+            : reject("No published items found");
     });
 };
 
 module.exports.getCategories = () => {
     return new Promise((resolve, reject) => {
-        categories.length > 0 ? resolve(categories) : reject("No categories found");
+        categories.length > 0
+            ? resolve(categories)
+            : reject("No categories found");
     });
 };
