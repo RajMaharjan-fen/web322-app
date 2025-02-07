@@ -1,3 +1,15 @@
+/*********************************************************************************
+WEB322 – Assignment 02
+
+I declare that this assignment is my own work.
+
+Name: Raj Maharjan
+Student ID: 162680235
+Date: FEB 5,2025
+Replit Web App URL: https://a2673d62-a909-4f67-98ae-168a927cbe2c-00-3fx40qplv98o1.spock.repl.co/
+GitHub Repository URL: https://github.com/RajMaharjan-fen/web322-app
+********************************************************************************/
+
 const express = require('express');
 const path = require('path');
 
