@@ -1,11 +1,11 @@
 /*********************************************************************************
-WEB322 – Assignment 02
+WEB322 – Assignment 03
 
 I declare that this assignment is my own work.
 
 Name: Raj Maharjan
 Student ID: 162680235
-Date: FEB 5,2025
+Date: march 4,2025
 Replit Web App URL: https://a2673d62-a909-4f67-98ae-168a927cbe2c-00-3fx40qplv98o1.spock.repl.co/
 GitHub Repository URL: https://github.com/RajMaharjan-fen/web322-app
 ********************************************************************************/
@@ -71,7 +71,7 @@ app.get('/shop', (req, res) => {
         .catch(err => res.status(404).json({ message: err }));
 });
 
-// ✅ Updated /items route with category and date filters
+
 app.get("/items", (req, res) => {
     if (req.query.category) {
         storeService.getItemsByCategory(req.query.category)
@@ -88,7 +88,7 @@ app.get("/items", (req, res) => {
     }
 });
 
-// ✅ New route to get an item by ID
+
 app.get("/item/:id", (req, res) => {
     storeService.getItemById(req.params.id)
         .then(data => res.json(data))
