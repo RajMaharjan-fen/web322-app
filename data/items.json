@@ -107,5 +107,15 @@
     "featureImage": "http://res.cloudinary.com/dbd1qlcof/image/upload/v1741149182/tjuxuxcnqcjazm46r5kd.png",
     "id": 11,
     "postDate": "2025-03-05"
+  },
+  {
+    "title": "SHin",
+    "price": "4656",
+    "body": "dasdasd",
+    "category": "2",
+    "published": true,
+    "featureImage": "http://res.cloudinary.com/dbd1qlcof/image/upload/v1741216788/fb5kp59z0wv0sw2b5pax.png",
+    "id": 12,
+    "postDate": "2025-03-05"
   }
 ]
