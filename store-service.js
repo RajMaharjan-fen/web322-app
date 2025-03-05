@@ -40,3 +40,47 @@ module.exports.getCategories = () => {
             : reject("No categories found");
     });
 };
+
+module.exports.addItem = (itemData) => {
+    return new Promise((resolve, reject) => {
+        itemData.published = itemData.published ? true : false;
+        itemData.id = items.length + 1;
+        itemData.postDate = new Date().toISOString().split("T")[0];
+        items.push(itemData);
+
+        fs.writeFile("./data/items.json", JSON.stringify(items, null, 2), (err) => {
+            if (err) {
+                reject("Unable to save item");
+            } else {
+                resolve(itemData);
+            }
+        });
+    });
+};
+
+module.exports.getItemsByCategory = (category) => {
+    return new Promise((resolve, reject) => {
+        let filteredItems = items.filter((item) => item.category.toString() === category.toString());
+        filteredItems.length > 0
+            ? resolve(filteredItems)
+            : reject("No results returned");
+    });
+};
+
+module.exports.getItemsByMinDate = (minDateStr) => {
+    return new Promise((resolve, reject) => {
+        let filteredItems = items.filter(
+            (item) => new Date(item.postDate) >= new Date(minDateStr)
+        );
+        filteredItems.length > 0
+            ? resolve(filteredItems)
+            : reject("No results returned");
+    });
+};
+
+module.exports.getItemById = (id) => {
+    return new Promise((resolve, reject) => {
+        let foundItem = items.find((item) => item.id === parseInt(id));
+        foundItem ? resolve(foundItem) : reject("No result returned");
+    });
+};
