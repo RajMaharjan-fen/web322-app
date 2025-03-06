@@ -6,7 +6,7 @@ I declare that this assignment is my own work.
 Name: Raj Maharjan
 Student ID: 162680235
 Date: march 4,2025
-Replit Web App URL: https://a2673d62-a909-4f67-98ae-168a927cbe2c-00-3fx40qplv98o1.spock.repl.co/
+Replit Web App URL: https://17ac6a10-0253-4f30-aeeb-174d7b4d5244-00-330nfyki0hg6u.kirk.replit.dev/
 GitHub Repository URL: https://github.com/RajMaharjan-fen/web322-app
 ********************************************************************************/
 
