@@ -17,16 +17,16 @@ const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const app = express();
 
-// Set up EJS as the view engine
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Serve static files from the "public" directory
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 8080;
 
-// Configure Cloudinary
+
 cloudinary.config({
     cloud_name: 'dbd1qlcof',
     api_key: '627917398641178',
@@ -36,10 +36,8 @@ cloudinary.config({
 
 const upload = multer();
 
-// Middleware to parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware to handle active routes for navigation
 app.use((req, res, next) => {
     let route = req.path.substring(1);
     app.locals.activeRoute = "/" + (isNaN(route.split('/')[1]) ? route.replace(/\/(?!.*)/, "") : route.replace(/\/(.*)/, ""));
@@ -49,17 +47,14 @@ app.use((req, res, next) => {
 
 const storeService = require('./store-service');
 
-// Render the About page
 app.get('/about', (req, res) => {
     res.render('about', { title: "Raj Maharjan's Store" });
 });
 
-// Render the Add Item page
 app.get('/items/add', (req, res) => {
     res.render('addItem', { title: "Add Item - Raj Maharjan's Store" });
 });
 
-// Handle form submission for adding a new item
 app.post("/items/add", upload.single("featureImage"), async (req, res) => {
     let imageUrl = "";
 
@@ -88,7 +83,6 @@ app.post("/items/add", upload.single("featureImage"), async (req, res) => {
         .catch(err => res.status(500).send("Error adding item: " + err));
 });
 
-// Render the Shop page
 app.get('/shop', (req, res) => {
     const category = req.query.category;
     if (category) {
@@ -126,32 +120,27 @@ app.get('/shop/:id', (req, res) => {
         .catch(err => res.render('shop', { title: "Shop - Raj Maharjan's Store", post: null, posts: [], categories: [], message: "No results returned", viewingCategory: req.query.category }));
 });
 
-// Render the Items page
 app.get('/items', (req, res) => {
     storeService.getAllItems()
         .then(items => res.render('items', { title: "Items - Raj Maharjan's Store", items, message: null }))
         .catch(err => res.render('items', { title: "Items - Raj Maharjan's Store", items: [], message: "No results returned" }));
 });
-// Render a single item by ID
 app.get("/item/:id", (req, res) => {
     storeService.getItemById(req.params.id)
         .then(data => res.render('item', { title: "Item Details - Raj Maharjan's Store", item: data }))
         .catch(err => res.render('item', { title: "Item Details - Raj Maharjan's Store", item: null, message: "No results returned" }));
 });
 
-// Render the Categories page
 app.get('/categories', (req, res) => {
     storeService.getCategories()
         .then(categories => res.render('categories', { title: "Categories - Raj Maharjan's Store", categories, message: null }))
         .catch(err => res.render('categories', { title: "Categories - Raj Maharjan's Store", categories: [], message: "No results returned" }));
 });
 
-// 404 Error Handler
 app.use((req, res) => {
     res.status(404).render('404', { title: "404 - Raj Maharjan's Store" });
 });
 
-// Initialize the store service and start the server
 storeService.initialize()
     .then(() => {
         app.listen(PORT, () => {
