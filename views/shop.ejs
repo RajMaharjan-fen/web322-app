@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-md-9">
+        <h2><%= post.title %></h2>
+        <img src="<%= post.featureImage %>" alt="Feature Image" class="img-fluid">
+        <br><br>
+        <p><%= post.description %></p>
+        <p><strong>Category:</strong> <%= post.category %></p>
+        <p><strong>Price:</strong> <%= post.price %></p>
+        <p><strong>Last Updated:</strong> <%= post.postDate %></p>
+    </div>
+    <div class="col-md-3">
+        <% if (posts && posts.length > 0) { %>
+            <h4>Items</h4>
+            <ul>
+                <% posts.forEach(post => { %>
+                    <li><a href="/shop/<%= post.id %>?category=<%= viewingCategory %>"><%= post.title %></a></li>
+                <% }) %>
+            </ul>
+        <% } %>
+        <% if (categories && categories.length > 0) { %>
+            <h4>Categories</h4>
+            <ul>
+                <% categories.forEach(category => { %>
+                    <li><a href="/shop?category=<%= category.id %>"><%= category.name %></a></li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </div>
+</div>

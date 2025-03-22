@@ -3,18 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-    
+    "start": "node server.js"
   },
-  "scripts": {
-  "start": "node server.js"
-},
   "keywords": [],
   "author": "Raj Maharjan",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "cloudinary": "^2.5.1",
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
     "multer": "^1.4.5-lts.1",
     "streamifier": "^0.1.1"
