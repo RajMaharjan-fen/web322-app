@@ -82,6 +82,19 @@ app.post("/items/add", upload.single("featureImage"), async (req, res) => {
         .then(() => res.redirect("/items"))
         .catch(err => res.status(500).send("Error adding item: " + err));
 });
+app.get("/categories/add", (req, res) => {
+    res.render("addCategory", { title: "Add Category - Raj Maharjan’s Store" });
+});
+
+app.post("/categories/add", async (req, res) => {
+    try {
+        await storeService.addCategory(req.body); // Ensure your storeService has `addCategory`
+        res.redirect("/categories");
+    } catch (err) {
+        res.status(500).send("Error adding category: " + err);
+    }
+});
+
 
 app.get('/shop', (req, res) => {
     const category = req.query.category;
@@ -141,6 +154,7 @@ app.use((req, res) => {
     res.status(404).render('404', { title: "404 - Raj Maharjan's Store" });
 });
 
+
 storeService.initialize()
     .then(() => {
         app.listen(PORT, () => {
@@ -151,3 +165,12 @@ storeService.initialize()
         console.log("Error initializing store service:", err);});
         app.get('/', (req, res) => res.redirect('/shop'));
         
+        storeService.initialize()
+        
+  .then(() => {
+    // optionally seed
+    // storeService.seedDatabaseFromJson();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
