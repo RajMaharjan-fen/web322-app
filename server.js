@@ -18,7 +18,9 @@ const streamifier = require('streamifier');
 const app = express();
 
 
-app.set('view engine', 'ejs');
+
+app.set("view engine", "ejs");
+
 app.set('views', path.join(__dirname, 'views'));
 
 
@@ -82,18 +84,6 @@ app.post("/items/add", upload.single("featureImage"), async (req, res) => {
         .then(() => res.redirect("/items"))
         .catch(err => res.status(500).send("Error adding item: " + err));
 });
-app.get("/categories/add", (req, res) => {
-    res.render("addCategory", { title: "Add Category - Raj Maharjan’s Store" });
-});
-
-app.post("/categories/add", async (req, res) => {
-    try {
-        await storeService.addCategory(req.body); // Ensure your storeService has `addCategory`
-        res.redirect("/categories");
-    } catch (err) {
-        res.status(500).send("Error adding category: " + err);
-    }
-});
 
 
 app.get('/shop', (req, res) => {
@@ -150,27 +140,61 @@ app.get('/categories', (req, res) => {
         .catch(err => res.render('categories', { title: "Categories - Raj Maharjan's Store", categories: [], message: "No results returned" }));
 });
 
-app.use((req, res) => {
-    res.status(404).render('404', { title: "404 - Raj Maharjan's Store" });
+app.get("/category/add", (req, res) => {
+    res.render("addCategory", { title: "Add Category - Raj Maharjan’s Store" });
+});
+
+// Handle form submission
+app.post("/category/add", async (req, res) => {
+    try {
+        console.log("Form submitted data:", req.body); // This shows what the user submitted
+        // Imagine this goes to a database
+        await storeService.addCategory(req.body); // Make sure this function exists
+        res.redirect("/categories");
+    } catch (err) {
+        res.status(500).send("Error adding category: " + err);
+    }
 });
 
 
+  
+  app.get("/items/delete/:id", async (req, res) => {
+    try {
+      await storeService.deletePostById(req.params.id);
+      res.redirect("/items");
+    } catch (err) {
+      res.status(500).send("Error deleting item: " + err);
+    }
+  });
+  
+
+app.get("/category/delete/:id", async (req, res) => {
+    try {
+        await storeService.deleteCategoryById(req.params.id); 
+        res.redirect("/categories");
+    } catch (err) {
+        res.status(500).send("Error deleting category: " + err);
+    }
+});
+
+app.get('/', (req, res) => res.redirect('/shop'));
+
+app.get("/test", (req, res) => {
+  res.send("Test route works!");
+});
+
+// 404 handler always LAST
+app.use((req, res) => {
+  res.status(404).render('404', { title: "404 - Raj Maharjan's Store" });
+});
+
+// START THE SERVER LAST
 storeService.initialize()
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-        });
-    })
-    .catch(err => {
-        console.log("Error initializing store service:", err);});
-        app.get('/', (req, res) => res.redirect('/shop'));
-        
-        storeService.initialize()
-        
   .then(() => {
-    // optionally seed
-    // storeService.seedDatabaseFromJson();
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   })
-  .catch((err) => {
-    console.log(err);
+  .catch(err => {
+    console.log("Error initializing store service:", err);
   });

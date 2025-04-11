@@ -132,6 +132,14 @@ function addCategory(categoryData) {
       .catch(() => reject("unable to create category"));
   });
 }
+function deletePostById(id) {
+  return new Promise((resolve, reject) => {
+    Item.destroy({ where: { id } })
+      .then(rowsDeleted => rowsDeleted > 0 ? resolve() : reject("Post not found"))
+      .catch(() => reject("Unable to delete post"));
+  });
+}
+
 
 function deleteCategoryById(id) {
   return new Promise((resolve, reject) => {
@@ -141,13 +149,6 @@ function deleteCategoryById(id) {
   });
 }
 
-function deletePostById(id) {
-  return new Promise((resolve, reject) => {
-    Item.destroy({ where: { id } })
-      .then(rowsDeleted => rowsDeleted > 0 ? resolve() : reject("Post not found"))
-      .catch(() => reject("Unable to delete post"));
-  });
-}
 
 // Export all functions
 module.exports = {

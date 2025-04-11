@@ -39,9 +39,8 @@
                   <td><a href="/items?category=<%= category.id %>"><%= category.id %></a></td>
                   <td><a href="/items?category=<%= category.id %>"><%= category.category %></a></td>
                   <td>
-                    <a href="/categories/delete/<%= category.id %>" class="btn btn-danger btn-sm">
-                      Remove
-                    </a>
+                    <a href="/category/delete/<%= category.id %>" class="btn btn-danger">Remove</a>
+
                   </td>
                 </tr>
               <% }); %>
