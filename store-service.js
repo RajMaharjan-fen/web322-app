@@ -23,7 +23,7 @@ const Item = sequelize.define('Item', {
   featureImage: Sequelize.STRING,
   published: Sequelize.BOOLEAN,
   price: Sequelize.DOUBLE,
-  category: Sequelize.INTEGER
+  category: Sequelize.INTEGER // foreign key to Category.id
 });
 
 // Relationships
@@ -83,6 +83,13 @@ function addItem(itemData) {
     itemData.published = itemData.published ? true : false;
     itemData.postDate = new Date();
 
+    // Parse price properly
+    if (itemData.price) {
+      itemData.price = parseFloat(itemData.price);
+      if (isNaN(itemData.price)) itemData.price = 0;
+    }
+
+    // Convert empty strings to null
     for (let prop in itemData) {
       if (itemData[prop] === "") {
         itemData[prop] = null;
@@ -91,7 +98,10 @@ function addItem(itemData) {
 
     Item.create(itemData)
       .then(() => resolve())
-      .catch(() => reject("unable to create post"));
+      .catch((err) => {
+        console.error("SEQUELIZE ERROR:", err); // Log actual Sequelize error
+        reject("unable to create post");
+      });
   });
 }
 
@@ -132,6 +142,7 @@ function addCategory(categoryData) {
       .catch(() => reject("unable to create category"));
   });
 }
+
 function deletePostById(id) {
   return new Promise((resolve, reject) => {
     Item.destroy({ where: { id } })
@@ -140,7 +151,6 @@ function deletePostById(id) {
   });
 }
 
-
 function deleteCategoryById(id) {
   return new Promise((resolve, reject) => {
     Category.destroy({ where: { id } })
@@ -148,7 +158,6 @@ function deleteCategoryById(id) {
       .catch(() => reject("Unable to delete category"));
   });
 }
-
 
 // Export all functions
 module.exports = {
