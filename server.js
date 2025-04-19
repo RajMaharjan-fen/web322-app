@@ -150,13 +150,13 @@ app.get("/items/add", ensureLogin, (req, res) => {
       .then((categories) => {
         res.render("addItem", {
           title: "Add Item - Raj Maharjan's Store",
-          categories // ✅ Pass categories to the view
+          categories 
         });
       })
       .catch(() => {
         res.render("addItem", {
           title: "Add Item - Raj Maharjan's Store",
-          categories: [] // still define it to avoid the error
+          categories: [] 
         });
       });
   });
@@ -182,7 +182,7 @@ app.post("/items/add", ensureLogin, upload.single("featureImage"), async (req, r
   
     req.body.featureImage = imageUrl;
     req.body.published = req.body.published ? true : false;
-    req.body.postDate = new Date().toISOString(); // <-- This line fixes it
+    req.body.postDate = new Date().toISOString(); 
     
     console.log("Adding item with data:", req.body);
     
@@ -190,7 +190,7 @@ app.post("/items/add", ensureLogin, upload.single("featureImage"), async (req, r
     storeService.addItem(req.body)
       .then(() => res.redirect("/items"))
       .catch(err => {
-        console.error("Error adding item:", err); // Show full error in terminal
+        console.error("Error adding item:", err); 
         res.status(500).send("Error adding item: " + err);
       });
   });
@@ -287,7 +287,7 @@ app.get("/userHistory", ensureLogin, (req, res) => {
   res.render("userHistory");
 });
 
-// 404 handler
+
 app.use((req, res) => {
   res.status(404).render('404', { title: "404 - Raj Maharjan's Store" });
 });

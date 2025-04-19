@@ -23,13 +23,10 @@ const Item = sequelize.define('Item', {
   featureImage: Sequelize.STRING,
   published: Sequelize.BOOLEAN,
   price: Sequelize.DOUBLE,
-  category: Sequelize.INTEGER // foreign key to Category.id
-});
+  category: Sequelize.INTEGER 
 
-// Relationships
 Item.belongsTo(Category, { foreignKey: 'category' });
 
-// ===== Sequelize Functions =====
 
 function initialize() {
   return new Promise((resolve, reject) => {
